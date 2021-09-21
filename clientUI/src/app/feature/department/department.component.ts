@@ -27,22 +27,16 @@ export class DepartmentComponent implements OnInit {
     });
   }
   
-  onSubmit(form:NgForm){
-    this.departmentService.postDepartment()
-    //.next(()=> {this.getDepartments();})
-    .subscribe(resp => {
-      this.resetForm(form);
-      this.toastr.success('Submitted Successfully', 'New Department Added!!');
+
+  onDelete(id:number){
+    this.departmentService.deleteDepartment(id)
+    .subscribe(res=>{
+      this.toastr.error('Department Deleted!', 'The Department has been successfully Deleted!!!');
       this.getDepartments();
-    }, error => {
+    }, error =>{
       console.log(error);
-    })
-  }
-  populateForm(selectedRecord:IDepartment){
-    this.departmentService.formData = Object.assign({},selectedRecord);
-  }
-  resetForm(form:NgForm){
-    form.form.reset();
+    });
+    
   }
 
 }

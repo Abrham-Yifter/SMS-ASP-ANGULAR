@@ -9,8 +9,14 @@ import { DepartmentDetailsComponent } from './department/department-details/depa
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
+import { NzButtonModule } from 'ng-zorro-antd/button';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { DepartmentCreateComponent } from './department/department-create/department-create.component';
+import { DepartmentEditComponent } from './department/department-edit/department-edit.component';
+import { FeatureRoutingModule } from './feature-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -19,26 +25,24 @@ import { ToastrModule } from 'ngx-toastr';
     StudentComponent,
     EnrollmentComponent,
     DepartmentItemComponent,
-    DepartmentDetailsComponent
+    
+    DepartmentDetailsComponent,
+         DepartmentCreateComponent,
+         DepartmentEditComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    NzButtonModule,
     BrowserAnimationsModule,
+    
     ToastrModule.forRoot(),
-    RouterModule.forRoot([
-      {path: '', component: DepartmentComponent},
-      {path: 'department-list', component: DepartmentComponent},
-      {path: 'department-detail/:id', component: DepartmentDetailsComponent},
-      {path: 'course-list', component: CourseComponent},
-      {path: 'student-list', component: StudentComponent},
-      {path: 'enrollment-list', component: EnrollmentComponent},
-      {path: '**', redirectTo: '', pathMatch: 'full'},
-    ]),
+    FeatureRoutingModule,
   ],
   exports: [
     DepartmentComponent,
-    RouterModule
-  ]
+    RouterModule,
+  ],
+  bootstrap: [DepartmentComponent]
 })
 export class FeatureModule { }

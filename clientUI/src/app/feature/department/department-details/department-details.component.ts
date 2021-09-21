@@ -11,8 +11,8 @@ import { DepartmentService } from '../../department.service';
 })
 export class DepartmentDetailsComponent implements OnInit {
   
-  department: IDepartment[] = [];
-
+  department = {} as IDepartment[];
+  dept = <IDepartment>{}
   constructor(private departmentService: DepartmentService, private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -23,7 +23,8 @@ export class DepartmentDetailsComponent implements OnInit {
 
     this.departmentService.getDepartment(+this.activateRoute.snapshot.paramMap.get('id')).subscribe(res => {
       this.department = res.data;
-      console.log(this.department);
+      this.dept = this.department[0];
+      console.log(this.dept);
     }, error =>{
       console.log(error);
     });

@@ -23,7 +23,12 @@ export class DepartmentService {
     return this.http.get<IDto>(this.baseUrl + '?id=' + id);
   }
   postDepartment(){
+    console.log(this.formData);
     return this.http.post(this.baseUrl, this.formData);
+  }
+  updateDepartment(formDa:IDepartment){
+    console.log(this.formData);
+    return this.http.put(this.baseUrl, formDa);
   }
   deleteDepartment(id:number){
     return this.http.delete(this.baseUrl+ '?id=' + id)

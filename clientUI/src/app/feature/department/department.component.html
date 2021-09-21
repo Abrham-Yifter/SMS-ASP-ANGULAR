@@ -1,31 +1,33 @@
 <div class="container">
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-4" *ngFor="let dept of departments">
         <app-department-item [department]="dept"></app-department-item>
     </div>
-  </div> <br><br>
+  </div> -->
+   <br><br>
+  <button nz-button nzType="primary"><a href="#" style="text-decoration: none;" routerLink="/department-create">Create Department</a></button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Location</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dept of departments">
+        <th scope="row">{{dept.id}}</th>
+        <td>{{dept.departmentName}}</td>
+        <td>{{dept.location}}</td>
+        <td><a class="btn btn-outline-success" routerLink="/department-detail/{{dept.id}}" >View »</a>
+          <a class="btn btn-outline-info" routerLink="/department-edit/{{dept.id}}">Edit</a>
+          <a class="btn btn-outline-danger" (click)="onDelete(dept.id)">Delete</a></td>
+      </tr>
+    </tbody>
+  </table> 
 
-  <form #form="ngForm" (submit)="onSubmit(form)">
-    <input type="hidden" name="id" [value]=9 >
-    <div class="form-group">
-      <label for="departmentName">Department Name</label>
-      <input type="text" class="form-control form-control-lg" name="departmentName" 
-      #departmentName="ngModel" [(ngModel)]="departmentService.formData.departmentName">
-    </div>
-    <div class="form-group">
-      <label for="location">Department Location</label>
-      <input type="text" class="form-control form-control-lg" name="location" 
-      #location="ngModel" [(ngModel)]="departmentService.formData.location">
-    </div>
-    <div class="form-group">
-      <label for="departmentDescription">Department Description</label>
-      <textarea name="departmentDescription" #departmentDescription="ngModel" 
-        [(ngModel)]="departmentService.formData.departmentDescription" cols="30" rows="10">
-      </textarea>
-    </div>
-    <div class="form-group">
-      <button class="btn btn-info btn-lg btn-block" type="submit">Submit</button>
-    </div>
-  </form>
+  <br><br><br>
+
 
 </div>

@@ -1,0 +1,28 @@
+<div class="container">
+    <h3 class="text-center" style="color:rgb(24, 8, 245)">Create New Department</h3>
+
+    <form  #form="ngForm" (submit)="onSubmit(form)">
+        <div class="form-group">
+        <label for="departmentName">Department Name</label>
+        <input type="text" class="form-control" name="departmentName" 
+        #departmentName="ngModel" [(ngModel)]="departmentService.formData.departmentName">
+        </div>
+
+        <div class="form-group">
+            <label for="location">Department Location</label>
+            <input type="text" class="form-control" name="location" 
+            #location="ngModel" [(ngModel)]="departmentService.formData.location">
+        </div>
+
+        <div class="form-group">
+          <label for="departmentDescription">Description</label>
+          <textarea class="form-control" name="departmentDescription" #departmentDescription="ngModel" 
+          [(ngModel)]="departmentService.formData.departmentDescription" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-info" type="submit">Submit</button>
+        </div>
+
+      </form>
+  </div>

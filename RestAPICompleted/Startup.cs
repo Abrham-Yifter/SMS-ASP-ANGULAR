@@ -1,20 +1,25 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-//using RestAPICompleted.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RestAPICompleted.Exceptions;
+
 using Studmgt.Application.Helpers;
+using Studmgt.Application.Interfaces;
 using Studmgt.Application.Interfaces.Context;
 using Studmgt.Application.Interfaces.Facade;
 using Studmgt.Application.Persistence;
 using Studmgt.Application.Services;
 using Studmgt.Domain.Interfaces.Facade;
 using Studmgt.Domain.Interfaces.Repository;
+using Studmgt.Infrastracture;
 using Studmgt.Infrastracture.Persistance;
+using Studmgt.Infrastructure.Persistance;
+using Studmgt.Infrastructure.Services;
 using System.Text;
 
 namespace RestAPICompleted
@@ -22,17 +27,25 @@ namespace RestAPICompleted
     public class Startup
     {
         private const string SECRETKEY = "TQvgjeABMPOwCycOqah5EQu5yyVjpmVGTQvgjeABMPOwCycOqah5Equ5yyVjpmVGTQvgjeABMPOwCycOqah5EQu5yyVjpmVG";
-        public Startup(IConfiguration configuration)
+       
+        private readonly IConfiguration _config;
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppIdentityDbContext>(x => x.UseSqlServer(_config.GetConnectionString("IdentityConnection")));
+
+            services.AddScoped<ITokenService, TokenService>();
+
+            services.AddIdentityServices(_config);
+
+
             services.AddControllers();
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped<IDepartmentService, DepartmentService>();
@@ -44,6 +57,8 @@ namespace RestAPICompleted
             services.AddTransient<ICourseRepository, CourseRepository>();
             services.AddTransient<IStudentRepository, StudentRepository>();
             services.AddTransient<IEnrollmentRepository, EnrollmentRepository>();
+
+
 
             services.AddCors(opt =>
             {
@@ -82,6 +97,7 @@ namespace RestAPICompleted
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -13,6 +13,7 @@ export class ErrorTestComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   get404Error(){
     this.http.get(this.baseUrl + 'Departments/'+ '?id=' + 55).subscribe(res=>{
       console.log(res);
@@ -27,6 +28,7 @@ export class ErrorTestComponent implements OnInit {
       console.log(error);
     });
   }
+
   get400Error(){
     this.http.get(this.baseUrl + 'buggy/badrequest').subscribe(res=>{
       console.log(res);
@@ -34,6 +36,7 @@ export class ErrorTestComponent implements OnInit {
       console.log(error);
     });
   }
+
   get400ValidationError(){
     this.http.get(this.baseUrl + 'Departments/'+ '?id=' + '55').subscribe(res=>{
       console.log(res);
