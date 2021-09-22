@@ -15,11 +15,11 @@ export class DepartmentService {
 
   constructor(private http: HttpClient) { }
 
-  getDepartments(){
-    return this.http.get<IDto>(this.baseUrl + '/GetAllDepartments');
+  getDepartments(id?:number, searchKey?:string, pageindex?:number, pageSize?:number){
+    return this.http.get<IDto>(this.baseUrl);
   }
 
-  getDepartment(id:number){
+  getDepartment(id?:number){
     return this.http.get<IDto>(this.baseUrl + '?id=' + id);
   }
   postDepartment(){

@@ -6,6 +6,7 @@ using Studmgt.Domain.Interfaces.Repository;
 using Studmgt.Domain.Model;
 using System;
 using System.Linq;
+using LinqKit;
 using System.Threading.Tasks;
 
 namespace Studmgt.Application.Services
@@ -38,6 +39,28 @@ namespace Studmgt.Application.Services
             return new ResponseDto<DepartmentDto>(_departmentRepository.Delete(id), "Member Deleted Successfully");
         }
 
+        [Obsolete]
+        public async Task<ResponseDto<DepartmentDto>> GetWithPredicate(int? id, string searchKey, int? pageIndex, int? pageSize)
+        {
+            var predicate = PredicateBuilder.True<Department>();
+            if (id != null)
+                predicate = predicate.And(p => p.Id == id);
+            else
+                predicate = string.IsNullOrEmpty(searchKey) ? null
+                           : predicate.And
+                            (
+                                p => p.DepartmentName.Contains(searchKey) ||
+                                p.Location.Contains(searchKey) ||
+                                p.DepartmentDescription.Contains(searchKey)
+                            );
+            return new ResponseDto<DepartmentDto>
+                (
+                    (await _departmentRepository.GetWithPredicateAsync(predicate, pageIndex ?? 0, pageSize ?? 2))
+                    .Select(x => _mapper.Map<DepartmentDto>(x)
+                    ).ToList()
+                );
+        }
+
         async Task<ResponseDto<DepartmentDto>> IDepartmentService.GetById(int id)
         {
             return new ResponseDto<DepartmentDto>(_mapper.Map<DepartmentDto>(await _departmentRepository.GetByIdAsync(id)));
@@ -47,5 +70,7 @@ namespace Studmgt.Application.Services
         {
             return new ResponseDto<DepartmentDto>((await _departmentRepository.GetAllAsync()).Select(x => _mapper.Map<DepartmentDto>(x)).ToList());
         }
+
+
     }
 }

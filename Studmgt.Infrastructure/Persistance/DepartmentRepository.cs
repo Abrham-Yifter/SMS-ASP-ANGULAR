@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Studmgt.Infrastracture.Persistance;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Studmgt.Application.Persistence
 {
@@ -43,6 +46,11 @@ namespace Studmgt.Application.Persistence
             return await _dbContext.Departments.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Department>> GetWithPredicateAsync(Expression<Func<Department, Boolean>> predicate, int pageIndex, int pageSize)
+        {
+            return predicate == null ? (await _dbContext.Departments.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync())
+                : (await _dbContext.Departments.Where(predicate).Skip(pageIndex * pageSize).Take(pageSize).ToListAsync());
+        }
 
         bool IAsyncRepository<Department>.Update(Department _object)
         {

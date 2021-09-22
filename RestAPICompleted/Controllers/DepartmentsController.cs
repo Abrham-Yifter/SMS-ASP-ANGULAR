@@ -19,9 +19,14 @@ namespace RestAPICompleted.Controllers
         }
 
         [HttpGet]
-        public async Task<ResponseDto<DepartmentDto>> Get(int id)
+        //public async Task<ResponseDto<DepartmentDto>> Get(int id)
+        //{
+        //    return await _departmentService.GetById(id);
+        //}
+        public async Task<ResponseDto<DepartmentDto>> Get(int? id, string searchKey, int? pageindex, int? pageSize)
         {
-            return await _departmentService.GetById(id);
+            return await _departmentService.GetWithPredicate(id, searchKey, pageindex, pageSize);
+
         }
         [HttpGet("GetAllDepartments")]
         public async Task<ResponseDto<DepartmentDto>> GetAllDepatments()

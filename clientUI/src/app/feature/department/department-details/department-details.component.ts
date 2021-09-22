@@ -21,7 +21,7 @@ export class DepartmentDetailsComponent implements OnInit {
   
   loadDepartment(){
 
-    this.departmentService.getDepartment(+this.activateRoute.snapshot.paramMap.get('id')).subscribe(res => {
+    this.departmentService.getDepartments(+this.activateRoute.snapshot.paramMap.get('id')).subscribe(res => {
       this.department = res.data;
       this.dept = this.department[0];
       console.log(this.dept);

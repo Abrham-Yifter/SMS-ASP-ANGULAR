@@ -15,6 +15,15 @@ export class AppComponent {
   constructor(private accountService: AccountService){}
 
   ngOnInit() {
-    this.currentUser$ = this.accountService.currentUser$;
+    this.loadCurrentUser();
+  }
+
+  loadCurrentUser() {
+    const token = localStorage.getItem('token');
+    this.accountService.loadCurrentUser(token).subscribe(() => {
+      console.log('loaded user');
+    }, error => {
+      console.log(error);
+    })
   }
 }
