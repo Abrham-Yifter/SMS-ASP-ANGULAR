@@ -86,8 +86,8 @@ namespace RestAPICompleted
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SECRETKEY)),
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidIssuer = "https://localhost:44303",
-                        ValidAudience = "https://localhost:44303",
+                        ValidIssuer = "https://localhost:5001",
+                        ValidAudience = "https://localhost:5001",
                         ValidateLifetime = true
 
                     };
