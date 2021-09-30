@@ -16,6 +16,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DepartmentCreateComponent } from './department/department-create/department-create.component';
 import { DepartmentEditComponent } from './department/department-edit/department-edit.component';
 import { FeatureRoutingModule } from './feature-routing.module';
+import { NzTableModule } from 'ng-zorro-antd/table';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { FeatureRoutingModule } from './feature-routing.module';
     FormsModule,
     NzButtonModule,
     BrowserAnimationsModule,
-    
+    NzTableModule,
     ToastrModule.forRoot(),
     FeatureRoutingModule,
   ],

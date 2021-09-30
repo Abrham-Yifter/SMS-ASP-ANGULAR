@@ -1,33 +1,27 @@
 <div class="container">
-  <!-- <div class="row">
-    <div class="col-4" *ngFor="let dept of departments">
-        <app-department-item [department]="dept"></app-department-item>
-    </div>
-  </div> -->
-   <br><br>
-  <button nz-button nzType="primary"><a href="#" style="text-decoration: none;" routerLink="/department-create">Create Department</a></button>
-  <table class="table table-striped">
+
+  <nz-table>
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Location</th>
-        <th scope="col">Action</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let dept of departments">
-        <th scope="row">{{dept.id}}</th>
+        <td>{{dept.id}}</td>
         <td>{{dept.departmentName}}</td>
         <td>{{dept.location}}</td>
         <td><a class="btn btn-outline-success" routerLink="/department-detail/{{dept.id}}" >View »</a>
           <a class="btn btn-outline-info" routerLink="/department-edit/{{dept.id}}">Edit</a>
           <a class="btn btn-outline-danger" (click)="onDelete(dept.id)">Delete</a></td>
+
       </tr>
     </tbody>
-  </table> 
-
-  <br><br><br>
+  </nz-table>
+  
 
 
 </div>
